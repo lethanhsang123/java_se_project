@@ -9,16 +9,18 @@ public abstract class Pizza {
 
     final Set<Topping> toppings;
 
-    abstract static class Builder<T extends Builder<T>> {
+    protected abstract static class Builder<T extends Builder<T>> {
         EnumSet<Topping> toppings = EnumSet.noneOf(Topping.class);
         public T topping(Topping topping) {
             toppings.add(Objects.requireNonNull(topping));
             return self();
         }
-        abstract T self();
+
+        abstract Pizza build();
+        protected abstract T self();
     }
 
-    private Pizza(Builder<?> builder) {
+    protected Pizza(Builder<?> builder) {
         toppings = builder.toppings;
     }
 }
